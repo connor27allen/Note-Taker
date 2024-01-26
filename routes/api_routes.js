@@ -1,12 +1,13 @@
 const fs = require('fs');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
+const router = require('express').Router();
 
 // GET /api/notes route
-app.get('../notes', (req, res) => {
+router.get('/notes', (req, res) => {
   try {
     // Read the db.json file
-    const data = fs.readFileSync(path.join(__dirname, 'db.json'), 'utf8');
+    const data = fs.readFileSync(path.join(__dirname, '../db/db.json'), 'utf8');
 
     // Parse the JSON data
     const notes = JSON.parse(data);
@@ -20,10 +21,10 @@ app.get('../notes', (req, res) => {
 });
 
 // POST /api/notes route
-app.post('../notes', (req, res) => {
+router.post('/notes', (req, res) => {
   try {
     // Read the db.json file
-    const data = fs.readFileSync(path.join(__dirname, 'db.json'), 'utf8');
+    const data = fs.readFileSync(path.join(__dirname, '../db/db.json'), 'utf8');
 
     // Parse the JSON data
     const notes = JSON.parse(data);
@@ -39,7 +40,7 @@ app.post('../notes', (req, res) => {
     notes.push(newNote);
 
     // Write the updated notes array to the db.json file
-    fs.writeFileSync(path.join(__dirname, 'db.json'), JSON.stringify(notes));
+    fs.writeFileSync(path.join(__dirname, '../db/db.json'), JSON.stringify(notes));
 
     // Return the new note as JSON
     res.json(newNote);
@@ -48,3 +49,5 @@ app.post('../notes', (req, res) => {
     res.status(500).json({ error: 'Failed to save the new note to the database.' });
   }
 });
+
+module.exports = router;

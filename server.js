@@ -14,6 +14,10 @@ app.use(express.static('./public'));
 
 app.use('/api', api_routes);
 
+app.get('/notes', (requestObj, responseObj) => {
+  responseObj.sendFile(path.join(__dirname, './public/notes.html'));
+});
+
 app.get('*', (requestObj, responseObj) => {
     responseObj.sendFile(path.join(__dirname, './public/index.html'));
   });
